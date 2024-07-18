@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const userRoutes = require("./routes/userRoutes");
 const app = express();
 require("dotenv").config();
 
@@ -9,9 +10,9 @@ app.use(express.json());
 
 //GET CONNECTION STRING
 const DB = process.env.MONGO_URL.replace(
-    '<PASSWORD>',
-    process.env.DATABASE_PASSWORD
-  );
+  "<PASSWORD>",
+  process.env.DATABASE_PASSWORD
+);
 
 mongoose
   .connect(DB, {
@@ -24,6 +25,8 @@ mongoose
   .catch((err) => {
     console.log(err);
   });
+
+app.use("/api/auth", userRoutes);
 
 app.listen(process.env.PORT, () =>
   console.log(`Server started on ${process.env.PORT}`)

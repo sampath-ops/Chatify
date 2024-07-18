@@ -1,18 +1,92 @@
-import styled from "styled-components"
-import { Link } from "react-router-dom";
-import logo from "../assets/logo.svg"
+import { useState } from "react";
+import styled from "styled-components";
+import { Link, useNavigate } from "react-router-dom";
+import logo from "../assets/logo.svg";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { registerRoute } from "../utils/APIRoutes";
+import axios from "axios";
 
-const handleChange = (event) => {
-    
+const Register = () => {
+  const navigate = useNavigate();
+
+  const [values, setValues] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const toastOptions = {
+    position: "bottom-right",
+    autoClose: 8000,
+    pauseOnHover: true,
+    draggable: true,
+    theme: "dark",
   };
 
-const handleSubmit = (event) =>{
+  const handleChange = (event) => {
+    setValues((prev) => {
+      return {
+        ...prev,
+        [event.target.name]: event.target.value,
+      };
+    });
+  };
 
-}
-const Register = () => {
-    return ( 
-        <>
-        <FormContainer>
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (handleValidation()) {
+      const { email, username, password } = values;
+      const { data } = await axios.post(registerRoute, {
+        username,
+        email,
+        password,
+      });
+      if (data.status === false) {
+        toast.error(data.msg, toastOptions);
+      }
+      if (data.status === true) {
+        localStorage.setItem(
+          process.env.REACT_APP_LOCALHOST_KEY,
+          JSON.stringify(data.user)
+        );
+        navigate("/");
+      }
+    }
+  };
+
+  const handleValidation = () => {
+    const { password, confirmPassword, username, email } = values;
+    if (password !== confirmPassword) {
+      toast.error(
+        "Password and confirm password should be same.",
+        toastOptions
+      );
+      return false;
+    } else if (username.length < 3) {
+      toast.error(
+        "Username should be greater than 3 characters.",
+        toastOptions
+      );
+      return false;
+    } else if (password.length < 8) {
+      toast.error(
+        "Password should be equal or greater than 8 characters.",
+        toastOptions
+      );
+      return false;
+    } else if (email === "") {
+      toast.error("Email is required.", toastOptions);
+      return false;
+    }
+
+    return true;
+  };
+
+  return (
+    <>
+      <FormContainer>
         <form action="" onSubmit={(event) => handleSubmit(event)}>
           <div className="brand">
             <img src={logo} alt="logo" />
@@ -48,14 +122,12 @@ const Register = () => {
           </span>
         </form>
       </FormContainer>
-        </>
-        
-     );
-}
- 
+      <ToastContainer />
+    </>
+  );
+};
+
 export default Register;
-
-
 
 const FormContainer = styled.div`
   height: 100vh;
@@ -82,7 +154,7 @@ const FormContainer = styled.div`
 
   form {
     display: flex;
-    width:500px;
+    width: 500px;
     flex-direction: column;
     gap: 2rem;
     background-color: #00000076;
@@ -92,18 +164,18 @@ const FormContainer = styled.div`
   input {
     background-color: transparent;
     padding: 1rem;
-    border: 0.1rem solid #C822FF;
+    border: 0.1rem solid #c822ff;
     border-radius: 0.4rem;
     color: white;
     width: 100%;
     font-size: 1rem;
     &:focus {
-      border: 0.1rem solid #E6ABFF;
+      border: 0.1rem solid #e6abff;
       outline: none;
     }
   }
   button {
-    background-color: #C822FF;
+    background-color: #c822ff;
     color: white;
     padding: 1rem 2rem;
     border: none;
@@ -113,16 +185,16 @@ const FormContainer = styled.div`
     font-size: 1rem;
     text-transform: uppercase;
     &:hover {
-      outline: 2px solid #E6ABFF;
+      outline: 2px solid #e6abff;
     }
   }
   span {
     color: white;
     text-transform: uppercase;
-    font-size:14px;
-    text-align:center;
+    font-size: 14px;
+    text-align: center;
     a {
-      color: #C822FF;
+      color: #c822ff;
       text-decoration: none;
       font-weight: bold;
     }
