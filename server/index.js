@@ -27,6 +27,7 @@ mongoose
   });
 
 app.use("/api/auth", userRoutes);
+app.use("/api/users",userRoutes)
 
 app.listen(process.env.PORT, () =>
   console.log(`Server started on ${process.env.PORT}`)
