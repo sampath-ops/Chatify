@@ -1,7 +1,12 @@
 import Logout from "./Logout";
 import styled from "styled-components";
+import ChatInput from "./ChatInput";
 
 const CharContainer = ({ currentChat }) => {
+  const handleSendMsg = async (msg) => {
+    console.log("our message: ",msg)
+  };
+
   return (
     <Container>
       <div className="chat-header">
@@ -18,6 +23,8 @@ const CharContainer = ({ currentChat }) => {
         </div>
         <Logout />
       </div>
+      <div className="chat-messages"></div>
+      <ChatInput handleSendMsg={handleSendMsg} />
     </Container>
   );
 };
