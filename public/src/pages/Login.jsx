@@ -27,7 +27,7 @@ const Login = () => {
     if (localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)) {
       navigate("/");
     }
-  }, []);
+  }, [navigate]);
 
   const handleChange = (event) => {
     console.log("current user",process.env.REACT_APP_LOCALHOST_KEY)
