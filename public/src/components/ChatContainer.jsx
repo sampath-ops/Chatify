@@ -3,10 +3,12 @@ import styled from "styled-components";
 import ChatInput from "./ChatInput";
 import axios from "axios";
 import { sendMessageRoute, recieveMessageRoute } from "../utils/APIRoutes";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
-const CharContainer = ({ currentChat, currentUser }) => {
+const ChatContainer = ({ currentChat, currentUser, socket }) => {
   const [messages, setMessages] = useState([]);
+  const [arrivalMessage, setArrivalMessage] = useState(null);
+  const scrollRef = useRef();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,12 +32,36 @@ const CharContainer = ({ currentChat, currentUser }) => {
   }, [currentChat]);
 
   const handleSendMsg = async (msg) => {
+    socket.current.emit("send-msg", {
+      to: currentChat._id,
+      from: currentUser._id,
+      msg,
+    });
     await axios.post(sendMessageRoute, {
       from: currentUser._id,
       to: currentChat._id,
       message: msg,
     });
+    const msgs = [...messages];
+    msgs.push({ fromSelf: true, message: msg });
+    setMessages(msgs);
   };
+
+  useEffect(() => {
+    if (socket.current) {
+      socket.current.on("msg-recieve", (msg) => {
+        setArrivalMessage({ fromSelf: false, message: msg });
+      });
+    }
+  }, [socket]);
+
+  useEffect(() => {
+    arrivalMessage && setMessages((prev) => [...prev, arrivalMessage]);
+  }, [arrivalMessage]);
+
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   return (
     <Container>
@@ -57,6 +83,7 @@ const CharContainer = ({ currentChat, currentUser }) => {
         {messages.map((message, index) => {
           return (
             <div
+              ref={scrollRef}
               key={index}
               className={`message ${message.fromSelf ? "sended" : "recieved"}`}
             >
@@ -72,7 +99,7 @@ const CharContainer = ({ currentChat, currentUser }) => {
   );
 };
 
-export default CharContainer;
+export default ChatContainer;
 
 const Container = styled.div`
   display: grid;
