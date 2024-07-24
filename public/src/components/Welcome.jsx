@@ -1,13 +1,15 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import Robot from "../assets/Welcome_animation.json";
 import { Player } from "@lottiefiles/react-lottie-player";
+import { BiRightArrow } from "react-icons/bi";
+import { tablet } from "../utils/constants";
 
-const Welcome = ({currentUser}) => {
-
+const Welcome = ({ currentUser, handleListOpenState, isOpenContact }) => {
   return (
     <Container>
-       <Player src={Robot} className="loader" autoplay loop/>
+      {isOpenContact ? '' : <BiRightArrow onClick={handleListOpenState}/> }
+      <Player src={Robot} className="loader" autoplay loop />
       <h1>
         Welcome, <span>{currentUser.username}!</span>
       </h1>
@@ -23,11 +25,24 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   color: white;
+  position: relative;
   flex-direction: column;
+  & > svg {
+    display: none;
+  }
+  ${tablet(css`
+    & > svg {
+      display: block;
+      position: absolute;
+      right: 20px;
+      cursor: pointer;
+      top: 32px;
+    }
+  `)}
   img {
     height: 20rem;
   }
   span {
-    color: #C822FF;
+    color: #c822ff;
   }
 `;

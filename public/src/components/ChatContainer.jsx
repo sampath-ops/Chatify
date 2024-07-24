@@ -1,11 +1,18 @@
 import Logout from "./Logout";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import ChatInput from "./ChatInput";
 import axios from "axios";
 import { sendMessageRoute, recieveMessageRoute } from "../utils/APIRoutes";
 import { useState, useEffect, useRef } from "react";
+import { tablet } from "../utils/constants";
+import { BiRightArrow } from "react-icons/bi";
 
-const ChatContainer = ({ currentChat, currentUser, socket }) => {
+const ChatContainer = ({
+  currentChat,
+  currentUser,
+  socket,
+  handleListOpenState,
+}) => {
   const [messages, setMessages] = useState([]);
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const scrollRef = useRef();
@@ -77,7 +84,10 @@ const ChatContainer = ({ currentChat, currentUser, socket }) => {
             <h3>{currentChat.username}</h3>
           </div>
         </div>
-        <Logout />
+        <div className="header-icons">
+          <Logout />
+          <BiRightArrow color="white" onClick={handleListOpenState} />
+        </div>
       </div>
       <div className="chat-messages">
         {messages.map((message, index) => {
@@ -103,17 +113,22 @@ export default ChatContainer;
 
 const Container = styled.div`
   display: grid;
-  grid-template-rows: 10% 80% 10%;
+  grid-template-rows: auto 1fr auto;
   gap: 0.1rem;
   overflow: hidden;
-  @media screen and (min-width: 720px) and (max-width: 1080px) {
-    grid-template-rows: 15% 70% 15%;
-  }
+
+  ${tablet(css`
+    height: 100%;
+  `)}
   .chat-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 2rem;
+    padding: 1rem 2rem;
+    ${tablet(css`
+      padding: 20px;
+      align-items: start;
+    `)}
     .user-details {
       display: flex;
       align-items: center;
@@ -129,6 +144,21 @@ const Container = styled.div`
         }
       }
     }
+    .header-icons {
+       > svg {
+        display: none;
+      }
+    }
+    ${tablet(css`
+      .header-icons {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+         > svg {
+        display: block;
+      }
+      }
+    `)}
   }
   .chat-messages {
     padding: 1rem 2rem;

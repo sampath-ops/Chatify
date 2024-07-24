@@ -1,8 +1,16 @@
 import { useState } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import Logo from "../assets/logo.svg";
+import { tablet } from "../utils/constants";
+import { BiLeftArrow } from "react-icons/bi";
 
-const Contacts = ({ contacts, currentUser, changeChat }) => {
+const Contacts = ({
+  contacts,
+  currentUser,
+  changeChat,
+  isOpenContact,
+  handleListOpenState,
+}) => {
   const [currentSelected, setCurrentSelected] = useState(undefined);
 
   const changeCurrentChat = (index, contact) => {
@@ -13,10 +21,13 @@ const Contacts = ({ contacts, currentUser, changeChat }) => {
   return (
     <>
       {currentUser && (
-        <Container>
+        <Container isOpenContact={isOpenContact}>
           <div className="brand">
-            <img src={Logo} alt="logo" />
-            <h3>Chatify</h3>
+            <div className="logo">
+              <img src={Logo} alt="logo" />
+              <h3>Chatify</h3>
+            </div>
+            <BiLeftArrow color="white" onClick={handleListOpenState} />
           </div>
           <div className="contacts">
             {contacts.map((contact, index) => {
@@ -60,22 +71,66 @@ const Contacts = ({ contacts, currentUser, changeChat }) => {
 
 export default Contacts;
 
+// const slideAnim = keyframes`
+// from{
+// transform: translateX(100%);
+// opacity: 0
+// }
+//   to {
+//     transform: translateX(50%);
+//     opacity: 1;
+//   }
+// `;
+
+// animation: ${css`
+//   ${slideAnim} 0.4s ease-in-out forwards;
+//   `}
+
 const Container = styled.div`
   display: grid;
-  grid-template-rows: 10% 75% 15%;
+  grid-template-rows: auto 1fr auto;
+  width: 100%;
   overflow: hidden;
   background-color: #080420;
+  z-index: 10;
+  height: 100%;
+  ${tablet(css`
+    position: absolute;
+    transform: ${(props) =>
+      props.isOpenContact ? "translateX(0)" : "translateX(-150%)"};
+    left: 0;
+    padding: 20px 20px;
+    width: 50%;
+  `)}
   .brand {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 1rem;
+    padding: 1.625rem 2rem;
     justify-content: center;
-    img {
-      height: 2rem;
+    svg {
+      display: none;
     }
-    h3 {
-      color: white;
-      text-transform: uppercase;
+    ${tablet(css`
+      padding: 1.25rem 0;
+      padding-top: 0;
+      justify-content: space-between;
+      svg {
+        display: block;
+      }
+    `)}
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      img {
+        height: 2rem;
+      }
+      h3 {
+        color: white;
+        text-transform: uppercase;
+      }
     }
   }
   .contacts {
@@ -134,14 +189,6 @@ const Container = styled.div`
     .username {
       h2 {
         color: white;
-      }
-    }
-    @media screen and (min-width: 720px) and (max-width: 1080px) {
-      gap: 0.5rem;
-      .username {
-        h2 {
-          font-size: 1rem;
-        }
       }
     }
   }

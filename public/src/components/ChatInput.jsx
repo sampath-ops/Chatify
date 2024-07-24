@@ -3,7 +3,7 @@ import { BsEmojiSmileFill } from "react-icons/bs";
 import { IoMdSend } from "react-icons/io";
 import styled from "styled-components";
 import EmojiPicker from "emoji-picker-react";
-const ChatInput = ({handleSendMsg}) => {
+const ChatInput = ({ handleSendMsg }) => {
   const [msg, setMsg] = useState("");
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
 
@@ -55,11 +55,7 @@ const Container = styled.div`
   align-items: center;
   grid-template-columns: 5% 95%;
   background-color: #080420;
-  padding: 0 2rem;
-  @media screen and (min-width: 720px) and (max-width: 1080px) {
-    padding: 0 1rem;
-    gap: 1rem;
-  }
+  padding: 0.81rem 2rem;
   .button-container {
     display: flex;
     align-items: center;
@@ -75,14 +71,14 @@ const Container = styled.div`
       .epr-main {
         position: absolute;
         top: -450px;
-        height:400px !important;
+        height: 400px !important;
         background-color: #080420;
         box-shadow: 0 5px 10px #9a86f3;
         border-color: #9a86f3;
         .epr-search-container {
-          input{
+          input {
             background-color: transparent;
-          border-color: #9a86f3;
+            border-color: #9a86f3;
           }
         }
         .epr-emoji-category-label {
