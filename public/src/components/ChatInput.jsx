@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { BsEmojiSmileFill } from "react-icons/bs";
 import { IoMdSend } from "react-icons/io";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import EmojiPicker from "emoji-picker-react";
+import { mobile } from "../utils/constants";
 const ChatInput = ({ handleSendMsg }) => {
   const [msg, setMsg] = useState("");
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
@@ -56,6 +57,11 @@ const Container = styled.div`
   grid-template-columns: 5% 95%;
   background-color: #080420;
   padding: 0.81rem 2rem;
+  ${mobile(css`
+    grid-template-columns: auto 1fr;
+    padding: 1rem;
+    gap: 0.6rem;
+  `)}
   .button-container {
     display: flex;
     align-items: center;
@@ -75,6 +81,13 @@ const Container = styled.div`
         background-color: #080420;
         box-shadow: 0 5px 10px #9a86f3;
         border-color: #9a86f3;
+        ${mobile(css`
+          top: -350px !important;
+          width: 75vw !important;
+          height: 300px !important;
+          >div:last-child{
+          display:none;}
+        `)}
         .epr-search-container {
           input {
             background-color: transparent;
@@ -102,7 +115,6 @@ const Container = styled.div`
       border: none;
       padding-left: 1rem;
       font-size: 1.2rem;
-
       &::selection {
         background-color: #9a86f3;
       }
@@ -118,16 +130,22 @@ const Container = styled.div`
       align-items: center;
       background-color: #9a86f3;
       border: none;
-      @media screen and (min-width: 720px) and (max-width: 1080px) {
-        padding: 0.3rem 1rem;
-        svg {
-          font-size: 1rem;
-        }
-      }
       svg {
         font-size: 2rem;
         color: white;
       }
+      ${mobile(css`
+        padding: 0.4rem 1rem;
+        svg {
+          font-size: 1.5rem;
+        }
+      `)}
     }
+    ${mobile(css`
+      gap: 1rem;
+      input {
+        font-size: 1rem;
+      }
+    `)}
   }
 `;

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled, { css } from "styled-components";
 import Logo from "../assets/logo.svg";
-import { tablet } from "../utils/constants";
+import { mobile, tablet } from "../utils/constants";
 import { BiLeftArrow } from "react-icons/bi";
 
 const Contacts = ({
@@ -99,8 +99,16 @@ const Container = styled.div`
     transform: ${(props) =>
       props.isOpenContact ? "translateX(0)" : "translateX(-150%)"};
     left: 0;
-    padding: 20px 20px;
+    padding: 20px;
     width: 50%;
+  `)}
+  ${mobile(css`
+    position: absolute;
+    transform: ${(props) =>
+      props.isOpenContact ? "translateX(0)" : "translateX(-150%)"};
+    left: 0;
+    padding: 15px;
+    width: 80%;
   `)}
   .brand {
     display: flex;
@@ -168,6 +176,19 @@ const Container = styled.div`
           color: white;
         }
       }
+      ${mobile(css`
+        min-height: 4rem;
+        .avatar {
+          img {
+            height: 2.5rem;
+          }
+        }
+        .username {
+          h3 {
+            font-size: 16px;
+          }
+        }
+      `)}
     }
     .selected {
       background-color: #d889fa;
@@ -191,5 +212,19 @@ const Container = styled.div`
         color: white;
       }
     }
+    ${mobile(css`
+      padding: 12px;
+      .avatar {
+        img {
+          height: 3rem;
+          max-inline-size: 100%;
+        }
+      }
+      .username {
+        h2 {
+          font-size:18px;
+        }
+      }
+    `)}
   }
 `;

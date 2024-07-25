@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { BiPowerOff } from "react-icons/bi";
 import styled from "styled-components";
 
-const Logout = ()=> {
+const Logout = () => {
   const navigate = useNavigate();
   const handleClick = async () => {
     localStorage.clear();
@@ -14,9 +14,9 @@ const Logout = ()=> {
       <BiPowerOff />
     </Button>
   );
-}
+};
 
-export default Logout
+export default Logout;
 
 const Button = styled.button`
   display: flex;

@@ -4,7 +4,7 @@ import ChatInput from "./ChatInput";
 import axios from "axios";
 import { sendMessageRoute, recieveMessageRoute } from "../utils/APIRoutes";
 import { useState, useEffect, useRef } from "react";
-import { tablet } from "../utils/constants";
+import { mobile, tablet } from "../utils/constants";
 import { BiRightArrow } from "react-icons/bi";
 
 const ChatContainer = ({
@@ -116,7 +116,6 @@ const Container = styled.div`
   grid-template-rows: auto 1fr auto;
   gap: 0.1rem;
   overflow: hidden;
-
   ${tablet(css`
     height: 100%;
   `)}
@@ -125,10 +124,6 @@ const Container = styled.div`
     justify-content: space-between;
     align-items: center;
     padding: 1rem 2rem;
-    ${tablet(css`
-      padding: 20px;
-      align-items: start;
-    `)}
     .user-details {
       display: flex;
       align-items: center;
@@ -145,19 +140,21 @@ const Container = styled.div`
       }
     }
     .header-icons {
-       > svg {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      > svg {
         display: none;
       }
+      ${tablet(css`
+        align-self: center;
+        > svg {
+          display: block;
+        }
+      `)}
     }
     ${tablet(css`
-      .header-icons {
-        display: flex;
-        gap: 16px;
-        align-items: center;
-         > svg {
-        display: block;
-      }
-      }
+      padding: 20px;
     `)}
   }
   .chat-messages {
@@ -166,6 +163,9 @@ const Container = styled.div`
     flex-direction: column;
     gap: 1rem;
     overflow: auto;
+    ${mobile(css`
+      padding: 1rem;
+    `)}
     &::-webkit-scrollbar {
       width: 0.2rem;
       &-thumb {
@@ -184,9 +184,11 @@ const Container = styled.div`
         font-size: 1.1rem;
         border-radius: 1rem;
         color: #d1d1d1;
-        @media screen and (min-width: 720px) and (max-width: 1080px) {
+        ${mobile(css`
           max-width: 70%;
-        }
+          padding: 10px;
+          font-size: 16px;
+        `)}
       }
     }
     .sended {

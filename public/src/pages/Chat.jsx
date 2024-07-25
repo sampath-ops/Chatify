@@ -7,7 +7,7 @@ import styled, { css } from "styled-components";
 import Contacts from "../components/Contacts";
 import Welcome from "../components/Welcome";
 import ChatContainer from "../components/ChatContainer";
-import { tablet } from "../utils/constants";
+import { mobile, tablet } from "../utils/constants";
 
 const Chat = () => {
   const navigate = useNavigate();
@@ -103,6 +103,11 @@ const Container = styled.div`
     grid-template-columns: 1fr 3fr;
     ${tablet(css`
       margin: 30px 50px;
+      position: relative;
+      display: block;
+    `)}
+     ${mobile(css`
+      margin: 20px;
       position: relative;
       display: block;
     `)}
