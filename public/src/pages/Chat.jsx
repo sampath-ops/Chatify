@@ -92,7 +92,7 @@ const Chat = () => {
 export default Chat;
 
 const Container = styled.div`
-  height: 100vh;
+  min-height: 100dvh;
   display: flex;
   background-color: #131324;
   .container {
