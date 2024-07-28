@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.svg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { registerRoute } from "../utils/APIRoutes";
 import axios from "axios";
+import { tablet } from "../utils/constants";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -144,6 +145,10 @@ const FormContainer = styled.div`
   gap: 1rem;
   align-items: center;
   background-color: #131324;
+  ${tablet(css`
+    width: 100%;
+    padding: 1rem;
+  `)}
   .brand {
     display: flex;
     align-items: center;
@@ -156,6 +161,14 @@ const FormContainer = styled.div`
       color: white;
       text-transform: uppercase;
     }
+    ${tablet(css`
+      img {
+        height: 3rem;
+      }
+      h1 {
+        font-size: 24px;
+      }
+    `)}
   }
 
   form {
@@ -166,6 +179,10 @@ const FormContainer = styled.div`
     background-color: #00000076;
     border-radius: 2rem;
     padding: 3rem 5rem;
+    ${tablet(css`
+      padding: 1.5rem;
+      width: 100%;
+    `)}
   }
   input {
     background-color: transparent;
@@ -179,6 +196,9 @@ const FormContainer = styled.div`
       border: 0.1rem solid #e6abff;
       outline: none;
     }
+    ${tablet(css`
+      padding: 0.8rem;
+    `)}
   }
   button {
     background-color: #c822ff;
@@ -193,6 +213,9 @@ const FormContainer = styled.div`
     &:hover {
       outline: 2px solid #e6abff;
     }
+    ${tablet(css`
+      padding: 0.8rem;
+    `)}
   }
   span {
     color: white;
@@ -204,5 +227,8 @@ const FormContainer = styled.div`
       text-decoration: none;
       font-weight: bold;
     }
+    ${tablet(css`
+      line-height: 28px;
+    `)}
   }
 `;

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styled, { css } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import Logo from "../assets/logo.svg";
 import { mobile, tablet } from "../utils/constants";
 import { BiLeftArrow } from "react-icons/bi";
@@ -71,20 +71,27 @@ const Contacts = ({
 
 export default Contacts;
 
-// const slideAnim = keyframes`
-// from{
-// transform: translateX(100%);
-// opacity: 0
-// }
-//   to {
-//     transform: translateX(50%);
-//     opacity: 1;
-//   }
-// `;
+const slideInAnim = keyframes`
+from{
+  transform: translateX(-150%);
+  opacity:0;
+}
+  to {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+`;
 
-// animation: ${css`
-//   ${slideAnim} 0.4s ease-in-out forwards;
-//   `}
+const slideOutAnim = keyframes`
+from{
+  transform: translateX(0%);
+  opacity:1;
+}
+  to {
+    transform: translateX(-150%);
+    opacity: 0;
+  }
+`;
 
 const Container = styled.div`
   display: grid;
@@ -96,17 +103,19 @@ const Container = styled.div`
   height: 100%;
   ${tablet(css`
     position: absolute;
-    transform: ${(props) =>
-      props.isOpenContact ? "translateX(0)" : "translateX(-150%)"};
+    animation: ${(props) =>
+      props.isOpenContact
+        ? css`
+            ${slideInAnim} 0.6s ease-in-out forwards;
+          `
+        : css`
+            ${slideOutAnim} 0.5s ease-in-out forwards;
+          `}
     left: 0;
     padding: 20px;
     width: 50%;
   `)}
   ${mobile(css`
-    position: absolute;
-    transform: ${(props) =>
-      props.isOpenContact ? "translateX(0)" : "translateX(-150%)"};
-    left: 0;
     padding: 15px;
     width: 80%;
   `)}
@@ -222,7 +231,7 @@ const Container = styled.div`
       }
       .username {
         h2 {
-          font-size:18px;
+          font-size: 18px;
         }
       }
     `)}

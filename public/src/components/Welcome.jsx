@@ -23,7 +23,7 @@ export default Welcome;
 const Container = styled.div`
   display: grid;
   grid-template-rows: 1fr auto auto;
-  justify-content:center;
+  justify-content: center;
   align-items: center;
   color: white;
   position: relative;
@@ -40,6 +40,10 @@ const Container = styled.div`
     display: none;
   }
   ${tablet(css`
+    grid-template-rows: repeat(8, minmax(0, 1fr));
+    div {
+      grid-row: 1 / 6;
+    }
     & > svg {
       display: block;
       position: absolute;

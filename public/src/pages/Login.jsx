@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.svg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { loginRoute } from "../utils/APIRoutes";
 import axios from "axios";
+import { mobile } from "../utils/constants";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -30,7 +31,7 @@ const Login = () => {
   }, [navigate]);
 
   const handleChange = (event) => {
-    console.log("current user",process.env.REACT_APP_LOCALHOST_KEY)
+    console.log("current user", process.env.REACT_APP_LOCALHOST_KEY);
     setValues((prev) => {
       return {
         ...prev,
@@ -115,6 +116,10 @@ const FormContainer = styled.div`
   gap: 1rem;
   align-items: center;
   background-color: #131324;
+  ${mobile(css`
+    width: 100%;
+    padding: 1rem;
+  `)}
   .brand {
     display: flex;
     align-items: center;
@@ -127,6 +132,14 @@ const FormContainer = styled.div`
       color: white;
       text-transform: uppercase;
     }
+    ${mobile(css`
+      img {
+        height: 3rem;
+      }
+      h1 {
+        font-size: 24px;
+      }
+    `)}
   }
 
   form {
@@ -137,6 +150,10 @@ const FormContainer = styled.div`
     background-color: #00000076;
     border-radius: 2rem;
     padding: 3rem 5rem;
+    ${mobile(css`
+      padding: 1.5rem;
+      width: 100%;
+    `)}
   }
   input {
     background-color: transparent;
@@ -150,6 +167,9 @@ const FormContainer = styled.div`
       border: 0.1rem solid #e6abff;
       outline: none;
     }
+    ${mobile(css`
+      padding: 0.8rem;
+    `)}
   }
   button {
     background-color: #c822ff;
@@ -164,6 +184,9 @@ const FormContainer = styled.div`
     &:hover {
       outline: 2px solid #e6abff;
     }
+    ${mobile(css`
+      padding: 0.8rem;
+    `)}
   }
   span {
     color: white;
@@ -175,5 +198,7 @@ const FormContainer = styled.div`
       text-decoration: none;
       font-weight: bold;
     }
-  }
+    ${mobile(css`
+      line-height: 28px;
+    `)}
 `;
