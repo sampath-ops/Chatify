@@ -1,4 +1,4 @@
-export const host = "https://chatify-z8fq.onrender.com";
+export const host = "https://chatify-server-ov4k.onrender.com";
 export const registerRoute = `${host}/api/auth/register`;
 export const loginRoute = `${host}/api/auth/login`;
 export const setAvatarRoute = `${host}/api/users/setavatar`;
